@@ -48,22 +48,10 @@
         "post-install-cmd": ["php ./vendor/bin/codecept bootstrap"],
         "post-update-cmd": ["php ./vendor/bin/codecept bootstrap"],
         "post-package-install": [
-            "echo 'Перенос директорий тестирования'",
-            "cp -r tests .",
-            "cp codeception.yml .",
-            "mkdir ./tests",
-            "mkdir ./tests/acceptance",
-            "mkdir ./tests/functional",
-            "mkdir ./tests/unit"
+            "echo Перенос директорий тестирования"
         ],
         "post-package-update": [
-            "echo 'Перенос директорий тестирования'",
-            "cp -r tests .",
-            "cp codeception.yml .",
-            "mkdir ./tests",
-            "mkdir ./tests/acceptance",
-            "mkdir ./tests/functional",
-            "mkdir ./tests/unit"
+            "echo Перенос директорий тестирования"
         ]
     },
     "autoload": {
