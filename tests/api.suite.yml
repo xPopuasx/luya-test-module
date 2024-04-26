@@ -1,4 +1,7 @@
 actor: ApiTester
 modules:
     enabled:
-        - \Helper\Api
+        - REST:
+              depends: PhpBrowser
+              url: 'http://localhost:8080/api'
+              part: [ json ]

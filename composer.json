@@ -29,7 +29,8 @@
         "codeception/codeception": "4.*",
         "codeception/module-phpbrowser": "*",
         "codeception/module-asserts": "*",
-        "codeception/module-rest": "2.0.x-dev"
+        "codeception/module-rest": "2.0.x-dev",
+        "codeception/module-yii2": "*"
     },
     "repositories": [
         {
