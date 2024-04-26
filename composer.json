@@ -52,6 +52,9 @@
         ],
         "post-package-update": [
             "echo Перенос директорий тестирования"
+        ],
+        "post-autoload-dump": [
+            "echo Перенос директорий тестирования"
         ]
     },
     "autoload": {
