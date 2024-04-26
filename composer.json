@@ -30,7 +30,6 @@
         "yiisoft/yii2-faker": "~2.0.0",
         "codeception/base": "^2.0@beta",
         "codeception/verify": "^0.4.0",
-        "guzzlehttp/guzzle": "6.5.x-dev",
         "flow/jsonpath": "^0.3.4"
     },
     "repositories": [
