@@ -48,6 +48,7 @@
         "post-install-cmd": ["php ./vendor/bin/codecept bootstrap"],
         "post-update-cmd": ["php ./vendor/bin/codecept bootstrap"],
         "post-package-install": [
+            "echo 'Перенос директорий тестирования'",
             "cp -r .\\vendor\\sitis\\feature-test-module\\tests\\ .",
             "cp .\\vendor\\sitis\\feature-test-module\\codeception.yml .",
             "mkdir ./tests",
