@@ -47,7 +47,13 @@
     "scripts": {
         "post-install-cmd": ["php ./vendor/bin/codecept bootstrap"],
         "post-update-cmd": ["php ./vendor/bin/codecept bootstrap"],
-        "post-package-install": ["mv tests ./"],
+        "post-package-install": [
+            "cp -r .\\vendor\\sitis\\feature-test-module\\tests\\ .",
+            "cp .\\vendor\\sitis\\feature-test-module\\codeception.yml .",
+            "mkdir ./tests/acceptance",
+            "mkdir ./tests/functional",
+            "mkdir ./tests/unit"
+        ],
         "post-package-update": ["mv tests ./"]
     },
     "autoload": {
