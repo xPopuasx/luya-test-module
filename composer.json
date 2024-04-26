@@ -50,6 +50,7 @@
         "post-package-install": [
             "cp -r .\\vendor\\sitis\\feature-test-module\\tests\\ .",
             "cp .\\vendor\\sitis\\feature-test-module\\codeception.yml .",
+            "mkdir ./tests",
             "mkdir ./tests/acceptance",
             "mkdir ./tests/functional",
             "mkdir ./tests/unit"
