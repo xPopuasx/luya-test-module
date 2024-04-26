@@ -27,7 +27,6 @@
     "require": {
         "php": ">=7.4",
         "yiisoft/yii2-debug": "~2.1.0",
-        "yiisoft/yii2-gii": "~2.1.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "codeception/base": "^2.0@beta",
         "codeception/verify": "^0.4.0",
