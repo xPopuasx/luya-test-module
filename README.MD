@@ -10,7 +10,7 @@
 
 ### Далее необходимо опубликовать тест файлы
  ```sh 
-  ./luya tests/tests/vendor-publish 
+  ./luya tests/tests/vendor-publish - будут опубликованы все файлы которые связаны с codecept
  ```
 
 ### Дальше необходимо настроить конфигурацию yml tests/api.suite.yml
