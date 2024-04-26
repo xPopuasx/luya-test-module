@@ -1,0 +1,63 @@
+{
+    "name": "sitis/feature-test-module",
+    "description": "Functional testing of API",
+    "type": "yii2-extension",
+    "minimum-stability": "dev",
+    "keywords": [
+        "luya",
+        "yii2",
+        "feature-test-module-extention"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "sitis",
+            "email": "dev@sitisit.ru"
+        }
+    ],
+    "require-dev": {
+        "yiisoft/yii2": "2.0.47",
+        "yiisoft/yii2-httpclient": "^2.0",
+        "sitis/shop": "dev-master",
+        "sitis/luya-module-admin": "*",
+        "sitis/luya-module-cms": "*",
+        "php-http/guzzle6-adapter": "^2.0@dev",
+        "http-interop/http-factory-guzzle": "dev-master"
+    },
+    "require": {
+        "php": ">=7.4",
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.1.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/base": "^2.0@beta",
+        "codeception/verify": "^0.4.0",
+        "guzzlehttp/guzzle": "6.5.x-dev",
+        "flow/jsonpath": "^0.3.4"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.sitis.dev"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:chemezov/luya-headless-cms-api.git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "sitis\\tests\\": ""
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "luyadev/luya-composer": true,
+            "php-http/discovery": true
+        }
+    }
+}
