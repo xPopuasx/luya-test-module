@@ -44,6 +44,12 @@
             "url": "git@github.com:chemezov/luya-headless-cms-api.git"
         }
     ],
+    "scripts": {
+        "post-install-cmd": ["php ./vendor/bin/codecept bootstrap"],
+        "post-update-cmd": ["php ./vendor/bin/codecept bootstrap"],
+        "post-package-install": ["mv tests ./"],
+        "post-package-update": ["mv tests ./"]
+    },
     "autoload": {
         "psr-4": {
             "sitis\\tests\\": ""
