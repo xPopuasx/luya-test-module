@@ -28,7 +28,8 @@
         "php": ">=8.1",
         "codeception/codeception": "4.*",
         "codeception/module-phpbrowser": "*",
-        "codeception/module-asserts": "*"
+        "codeception/module-asserts": "*",
+        "codeception/module-rest": "2.0.x-dev"
     },
     "repositories": [
         {
@@ -44,19 +45,6 @@
             "url": "git@github.com:chemezov/luya-headless-cms-api.git"
         }
     ],
-    "scripts": {
-        "post-install-cmd": ["php ./vendor/bin/codecept bootstrap"],
-        "post-update-cmd": ["php ./vendor/bin/codecept bootstrap"],
-        "post-package-install": [
-            "echo Перенос директорий тестирования"
-        ],
-        "post-package-update": [
-            "echo Перенос директорий тестирования"
-        ],
-        "post-autoload-dump": [
-            "echo Перенос директорий тестирования"
-        ]
-    },
     "autoload": {
         "psr-4": {
             "sitis\\tests\\": ""
