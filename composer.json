@@ -47,6 +47,7 @@
     "scripts": {
         "post-install-cmd": ["php vendor/bin/codecept bootstrap"],
         "post-package-install": ["php vendor/bin/codecept bootstrap"],
+        "post-package-update": ["php vendor/bin/codecept bootstrap"],
         "post-update-cmd": ["php vendor/bin/codecept bootstrap"]
     },
     "autoload": {
