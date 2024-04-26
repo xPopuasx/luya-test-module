@@ -56,7 +56,15 @@
             "mkdir ./tests/functional",
             "mkdir ./tests/unit"
         ],
-        "post-package-update": ["mv tests ./"]
+        "post-package-update": [
+            "echo 'Перенос директорий тестирования'",
+            "cp -r tests .",
+            "cp codeception.yml .",
+            "mkdir ./tests",
+            "mkdir ./tests/acceptance",
+            "mkdir ./tests/functional",
+            "mkdir ./tests/unit"
+        ]
     },
     "autoload": {
         "psr-4": {
