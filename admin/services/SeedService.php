@@ -4,6 +4,7 @@ namespace sitis\tests\admin\services;
 
 use DateTime;
 use Faker\Factory;
+use Yii;
 use yii\db\Exception;
 use yii\db\mysql\ColumnSchema;
 use yii\db\Query;
@@ -21,13 +22,21 @@ class SeedService
     /**
      * @throws Exception
      */
-    public function seed(TableSchema $tableSchema, array $foreignIds = [], int $count = 10): void
+    public function seed(TableSchema $tableSchema, int $count = 10): void
     {
+
         $fakeData = $foreignIdsInserts = [];
 
-        if ($foreignIds) {
-            foreach ($tableSchema->foreignKeys as $foreignKey) {
-                $foreignIdsInserts[array_keys($foreignIds[$foreignKey[0]])[0]] = array_values($foreignIds[$foreignKey[0]])[0];
+        if(!empty($tableSchema->foreignKeys)){
+            foreach ($tableSchema->foreignKeys as $foreignKey){
+                $findIds = $this->getForeignIds($foreignKey[0], array_values($foreignKey)[1]);
+                $foreignIdsInserts[array_keys($foreignKey)[1]] =
+                    array_values(
+                        array_diff($findIds,
+                            $this->unique($tableSchema->name, array_keys($foreignKey)[1])
+                        )
+                    );
+
             }
         }
 
@@ -38,7 +47,15 @@ class SeedService
                     continue;
                 }
 
-                $fakeData[$count][$column->name] = $this->getFakeByType($column, $foreignIdsInserts, array_merge(array_column($fakeData, $column->name), $this->getForeignIds($tableSchema->name, $column->name)));
+                $fakeData[$count][$column->name] =
+                    $this->getFakeByType(
+                        $column,
+                        array_diff(
+                            $foreignIdsInserts[$column->name] ?? [],
+                            array_column($fakeData, $column->name)
+                        ),
+                        array_keys($foreignIdsInserts)
+                    );
             }
         }
 
@@ -56,15 +73,22 @@ class SeedService
         \Yii::$app->db->createCommand()
             ->batchInsert($tableSchema->name, array_values($columnNames), array_map(fn($column) => array_values($column), $fakeData))
             ->execute();
-
     }
 
     public function getForeignIds(string $tableName, string $column): array
     {
+        return (new Query())->select($column)->from($tableName)->orderBy([$column => SORT_DESC])->column();
+    }
+
+    public function unique(string $tableName, string $column): array
+    {
         return (new Query())->select($column)->from($tableName)->column();
     }
 
-    private function getFakeByType(ColumnSchema $columnSchema, array $foreignIds = [], array $existingValues = []): float|DateTime|string
+    /**
+     * @throws \yii\base\Exception
+     */
+    private function getFakeByType(ColumnSchema $columnSchema, array $foreignIds = [], array $foreignKeys = []): float|DateTime|string|null
     {
         $instance = $this->faker->create();
 
@@ -72,10 +96,23 @@ class SeedService
             return $instance->{$columnSchema->name}();
         }
 
-        if (in_array($columnSchema->name, array_keys($foreignIds))) {
-            $id = array_rand(array_diff($foreignIds[$columnSchema->name], $existingValues));
+        if (in_array($columnSchema->name , ['password', 'password_hash'])) {
+            return Yii::$app->security->generatePasswordHash('password');
+        }
 
-            return $foreignIds[$columnSchema->name][$id];
+        if ($columnSchema->name == 'phone') {
+            return $instance->phoneNumber();
+        }
+        if (in_array($columnSchema->name , ['email', 'mail'])) {
+            return $instance->email();
+        }
+
+        if (in_array($columnSchema->name, $foreignKeys)) {
+            if(count($foreignIds) == 0){
+                return null;
+            }
+
+            return $foreignIds[array_rand($foreignIds)];
         }
 
         return match ($columnSchema->type) {

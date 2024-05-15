@@ -11,11 +11,6 @@ use yii\helpers\Console;
 
 class DatabaseController extends Command
 {
-
-    public array $foreignIds = [];
-
-    public array $hasForeignKeyTables = [];
-
     public function __construct($id, $module, private readonly DatabaseService $databaseService, private readonly SeedService $seedService, $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -28,6 +23,10 @@ class DatabaseController extends Command
     public function actionSeed(): void
     {
         $tables = $this->databaseService->getTables();
+
+        $this->databaseService->makeSortTablesByForeignKey($tables);
+
+        $tables = $this->databaseService->tables;
 
         if (!$tables) {
             return;
@@ -47,24 +46,9 @@ class DatabaseController extends Command
 
         Console::output('Seeding ' . $tableName . ' table...');
 
-        if(count($tableInfo->foreignKeys) > 0) {
-            foreach ($tableInfo->foreignKeys as $foreignKey) {
-                $tableName = $foreignKey[0];
-
-                if(in_array($tableName, $this->hasForeignKeyTables)){
-                    continue;
-                }
-
-                $this->hasForeignKeyTables[] = $tableName;
-                $this->foreignIds[$tableName][array_keys($foreignKey)[1]] = $this->seedService->getForeignIds($tableName, $foreignKey[array_keys($foreignKey)[1]]);
-                $this->seed($tableName);
-            }
-        } else {
-            $this->seedService->seed($tableInfo, $this->foreignIds);
-        }
+        $this->seedService->seed($tableInfo);
 
         Console::output('Seeded ' . $tableName . ' table');
     }
-
 
 }
